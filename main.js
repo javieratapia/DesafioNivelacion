@@ -1,3 +1,5 @@
+// Para ver cada ejercicio descomentar console.log o función correspondiente al ejercicio
+
 // Para la declaración de variables se debe utilizar const
 const productos = [
   { nombre: "manzana", precio: 500, stock: 30 },
@@ -9,7 +11,6 @@ const productos = [
 ];
 
 //Mostrar con console.log cuántos productos quedan en stock | Para filtrar elementos utilizar filter.
-
 //Simular al menos una vez un código asíncrono con Async/Await. Para esto se puede utilizar setTimeout para simular un código que no retorne inmediatamente el resultado.
 const productosStock = () => {
   return new Promise((resolve, reject) => {
@@ -22,10 +23,9 @@ async function mostrarProductos() {
   const datosAwait = await productosStock();
   console.log(datosAwait);
 }
-mostrarProductos();
+// mostrarProductos();
 
 //Subir el precio de los productos cuando quede poca existencia (modificar el precio de un producto cuando algún producto tenga una existencia) | Para cambiar valores a objetos dentro del Array utilizar map.
-
 const subirPrecioProductoUnico = productos.map((producto) => {
   if (producto.stock === 1) {
     return {
@@ -35,30 +35,37 @@ const subirPrecioProductoUnico = productos.map((producto) => {
   }
   return producto;
 });
-console.log(subirPrecioProductoUnico);
+// console.log(subirPrecioProductoUnico);
+
 
 //Averiguar si pueden vender un producto (si hay suficiente en stock) | Para averiguar si algún producto o todos los productos cumplen con alguna condición utilizar some o every.
 // Manejar errores con throw y Error.
-
 const pedido = {
   nombre: "manzana",
-  cantidad: 500,
+  cantidad: 5,
 };
-const puedoVender = (nombre, stock) =>
-  productos.some((producto) => {
-    try {
-      if (producto.nombre === nombre) {
-        producto.stock >= stock
-          ? console.log("puede vender")
-          : console.log("no hay suficiente stock");
+const existeProducto = (arr, val) => {
+  return arr.some(arrVal => val === arrVal.nombre);
+}
+const puedoVender = ((nombre, stock) => {
+try {
+  if (existeProducto(productos, nombre)) {
+      let index = productos.findIndex(elem => elem.nombre === nombre);
+      //   console.log(index)
+      if (productos[index].stock >= stock) {
+          return (console.log("puede vender"))
       }
-      throw new Error("Producto no existe");
-    } catch {}
-  });
-puedoVender(pedido.nombre, pedido.cantidad);
+      throw new Error("no hay suficiente stock");
+  }
+  throw new Error("El producto no existe");
+} catch (e) {
+  console.log(e)
+}
+});
+// puedoVender(pedido.nombre, pedido.cantidad);
+
 
 //Saber cuánto es el valor total de los productos | Para calcular totales se debe utilizar reduce donde se debe sumar los valores de cada producto y luego retornar el total.
-
 const valorTotalProductos = () => {
   const array = [];
   let sumaTotal = 0;
@@ -70,4 +77,4 @@ const valorTotalProductos = () => {
   }, 0);
   return sumaTotal;
 };
-console.log(valorTotalProductos())
+// console.log(valorTotalProductos())
